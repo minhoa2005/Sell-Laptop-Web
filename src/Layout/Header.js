@@ -5,8 +5,9 @@ import { userContext } from '../UserContext';
 export default function Header() {
     const [current, setCurrent] = useState('home');
     const navigate = useNavigate();
-    const { user, setUser } = useContext(userContext);
+    const { user, setUser, loading } = useContext(userContext);
     useEffect(() => {
+        if (loading) return;
         if (!user) {
             navigate('/login');
         }
