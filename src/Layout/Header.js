@@ -24,7 +24,7 @@ export default function Header() {
                 {user?.role === 1 && (
                     <>
                         <p className={`fs-5 mb-0 ${current === 'myOrder' ? '' : 'text-muted'}`} style={{ cursor: 'pointer' }} onClick={() => { setCurrent('myOrder') }}>Đơn Hàng Của Tôi</p>
-                        <p className={`fs-5 mb-0 ${current === 'myCart' ? '' : 'text-muted'}`} style={{ cursor: 'pointer' }} onClick={() => { setCurrent('myCart') }}>Giỏ Hàng Của Tôi</p>
+                        {/* <p className={`fs-5 mb-0 ${current === 'myCart' ? '' : 'text-muted'}`} style={{ cursor: 'pointer' }} onClick={() => { setCurrent('myCart') }}>Giỏ Hàng Của Tôi</p> */}
                         <div>
                             <p className=' dropdown-toggle fs-5 mb-0 text-muted' style={{ cursor: 'pointer' }} data-bs-toggle="dropdown" aria-expanded="false">
                                 Tài Khoản
