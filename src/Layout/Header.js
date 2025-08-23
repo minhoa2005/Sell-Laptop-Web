@@ -32,7 +32,7 @@ export default function Header() {
                             </p>
                             <ul className='dropdown-menu'>
                                 <li>
-                                    <a className='dropdown-item' href='/profile'>Thông Tin Cá Nhân</a>
+                                    <a className='dropdown-item' href='/personal-info'>Thông Tin Cá Nhân</a>
                                     <p className='dropdown-item mb-0' onClick={handleLogout} style={{ cursor: 'pointer' }}>Đăng Xuất</p>
                                 </li>
                             </ul>

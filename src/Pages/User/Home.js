@@ -42,7 +42,7 @@ export default function Home() {
 
                         </div>
                         <p className='card-text fs-5 text-center mb-0 text-danger'>{product.price} VNĐ</p>
-                        <div className='card-footer btn btn-primary' style={{ cursor: 'pointer', }} onClick={() => navigate(`/product/${product.id}`)}>
+                        <div className='card-footer btn btn-primary' style={{ cursor: 'pointer', }} onClick={(e) => { e.stopPropagation(); navigate(`/order/${product.id}`) }}>
                             <p className='text-center mb-0'>Đặt hàng</p>
                         </div>
                     </div>
