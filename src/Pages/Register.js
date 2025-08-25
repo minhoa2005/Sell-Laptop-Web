@@ -42,7 +42,7 @@ export default function Register() {
                 email,
                 password,
                 personalInfo: {},
-                address: {},
+                address: [],
                 role: 1
             }
             await axios.post(API, userData);

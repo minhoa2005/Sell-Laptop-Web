@@ -20,7 +20,15 @@ export default function Login() {
                 setUser(getUser.data[0]);
                 sessionStorage.setItem('user', JSON.stringify(getUser.data[0]));
                 alert("Đăng nhập thành công");
-                navigate('/home');
+                if (getUser.data[0].role === 1) {
+                    navigate('/home');
+                }
+                else if (getUser.data[0].role === 2) {
+                    navigate('/sale/order-list');
+                }
+                else {
+                    navigate('/login');
+                }
             } else {
                 setError({ general: 'Email hoặc mật khẩu không đúng' });
             }
@@ -30,7 +38,15 @@ export default function Login() {
     }
     useEffect(() => {
         if (user) {
-            navigate('/home');
+            if (user?.role === 1) {
+                navigate('/home');
+            }
+            else if (user?.role === 2) {
+                navigate('/sale/order-list');
+            }
+            else {
+                navigate('/login')
+            }
         }
     }, [user]);
     return (
@@ -42,12 +58,12 @@ export default function Login() {
                     <div className="mb-3">
                         <div className="mb-3">
                             <label htmlFor="email" className="form-label fw-bold">Email</label>
-                            <input type="email" className="form-control form-control-lg" id="email" required placeholder='Nhập email của bạn' onClick={(e) => setEmail(e.target.value)} />
+                            <input type="email" className="form-control form-control-lg" id="email" required placeholder='Nhập email của bạn' onChange={(e) => { setEmail(e.target.value) }} />
                             {error.email && <div className="text-danger">{error.email}</div>}
                         </div>
                         <div className="mb-3">
                             <label htmlFor="password" className="form-label fw-bold">Mật khẩu</label>
-                            <input type="password" className="form-control form-control-lg" id="password" required placeholder='Nhập mật khẩu của bạn' onClick={(e) => setPassword(e.target.value)} />
+                            <input type="password" className="form-control form-control-lg" id="password" required placeholder='Nhập mật khẩu của bạn' onChange={(e) => { setPassword(e.target.value) }} />
                             {error.password && <div className="text-danger">{error.password}</div>}
                         </div>
                         <div className='d-flex flex-column justify-content-center align-items-center'>

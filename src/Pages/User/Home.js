@@ -24,11 +24,14 @@ export default function Home() {
             navigate('/login');
         }
         else {
-            if (user.role === 1) {
+            if (user?.role === 1) {
                 fetchProduct();
             }
+            if (user?.role === 2) {
+                navigate('/sale/order-list');
+            }
         }
-    }, [user]);
+    }, [user, loading]);
     return (
         <div>
             <Header />

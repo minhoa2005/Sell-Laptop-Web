@@ -28,6 +28,10 @@ export default function ProductDetail() {
             if (user.role === 1) {
                 fetchProduct();
             }
+            else {
+                alert("Bạn không có quyền truy cập");
+                navigate('/login');
+            }
         }
 
     }, [user, loading, id]);
@@ -59,7 +63,7 @@ export default function ProductDetail() {
                                     <h3 className="card-title">{product.name}</h3>
 
                                     <div className="mb-2">
-                                        <span className="badge bg-success">Còn hàng</span>
+                                        {product?.quantity > 0 ? <span className="badge bg-success">Còn hàng</span> : <span className="badge bg-danger">Hết hàng</span>}
                                     </div>
 
                                     <div className="fs-3 fw-bold text-danger mb-3">
@@ -80,6 +84,6 @@ export default function ProductDetail() {
                     </div>
                 )}
             </div>
-        </div>
+        </div >
     )
 }

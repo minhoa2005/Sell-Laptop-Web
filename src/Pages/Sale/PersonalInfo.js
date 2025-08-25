@@ -48,7 +48,7 @@ export default function PersonalInfo() {
           <h2>Thông tin chung</h2>
           <div className=''>
             <label htmlFor="fullName" className='fw-bold'>Họ và tên:</label>
-            <input type="text" id="fullName" className="form-control" value={formName} onChange={(e) => setFormName(e.target.value)} />
+            <input type="text" id="fullName" className="form-control" value={formName} onChange={(e) => setFormName(e.target.value)} readOnly />
           </div>
           <div className=''>
             <label htmlFor="email" className='fw-bold'>Email:</label>
@@ -60,7 +60,7 @@ export default function PersonalInfo() {
           </div>
         </div>
         <br />
-        <div className='shadow-sm border p-3 rounded'>
+        {/* <div className='shadow-sm border p-3 rounded'>
           <h2>Địa chỉ</h2>
           <div className='d-flex flex-column gap-2'>
             <label htmlFor="address" className='fw-bold'>Địa chỉ:</label>
@@ -73,8 +73,8 @@ export default function PersonalInfo() {
           </div>
           <hr />
           <button className='btn btn-primary' onClick={() => { setAddress([...address, '']) }}>Thêm địa chỉ</button>
-        </div>
-        <br />
+        </div> */}
+        {/* <br /> */}
         <div className='d-flex justify-content-center'><button className='btn btn-success btn-lg' onClick={() => { saveInformation(); }}>Lưu</button></div>
       </div>
     </div>
