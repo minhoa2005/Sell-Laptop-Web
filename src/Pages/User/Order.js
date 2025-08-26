@@ -47,9 +47,19 @@ export default function Order() {
             price,
             address: formUserAddress,
             phone: formUserPhone,
+            date: new Date().toLocaleString('vi-VN'),
             orderStatus: "pending"
         };
+        if (quantity > product.quantity) {
+            alert("Số lượng đặt vượt quá số lượng trong kho");
+            return;
+        }
+        if (product.quantity === 0) {
+            alert("Sản phẩm đã hết hàng");
+            return;
+        }
         await axios.post('http://localhost:9999/order', order);
+        await axios.patch(`http://localhost:9999/products/${product.id}`, { quantity: product.quantity - quantity });
         alert("Đặt hàng thành công. Bạn có thể theo dõi đơn hàng ở mục Đơn Hàng Của Tôi");
         navigate('/home');
     }
@@ -57,12 +67,14 @@ export default function Order() {
         if (loading) return;
         if (!user) {
             navigate('/login');
+            return;
         }
         if (user.role !== 1) {
             alert("Bạn không có quyền truy cập");
             navigate('/login');
+            return;
         }
-        setFormUserAddress(user?.address || '');
+        setFormUserAddress(user?.address[0] || '');
         setFormUserName(user?.personalInfo?.name || '');
         setFormUserPhone(user?.personalInfo?.phone || '');
         console.log(user);
@@ -74,11 +86,11 @@ export default function Order() {
     return (
         <div>
             <Header />
-            {/* có thể dùng grid để chia đôi 1 phần hiện sơ lược sản phẩm đang đặt, một bên là địa chỉ và xác nhận đặt */}
+
             <div className='container-fluid row'>
                 <h1>Đặt Hàng</h1>
                 <div className='col-7'>
-                    {/* Thông tin sản phẩm */}
+
                     <div className='d-flex flex-row gap-5 border p-4 shadow-sm rounded'>
                         <img src="/laptop1.png" alt="Product" className="img-fluid rounded shadow-sm border" />
                         <div>
@@ -88,17 +100,18 @@ export default function Order() {
                             <hr />
                             <p className='fw-bold mb-0'>Chọn số lượng: </p>
                             <div className='d-flex align-items-center gap-3'>
-                                <button className='btn btn-secondary' onClick={() => setQuantity(quantity - 1)} disabled={quantity === 1}>
+                                <button className='btn btn-secondary' onClick={() => setQuantity(quantity - 1)} disabled={quantity === 1 || product?.quantity === 0}>
                                     -
                                 </button>
                                 <p className='mb-0'>{quantity}</p>
-                                <button className='btn btn-secondary' onClick={() => setQuantity(quantity + 1)} disabled={product?.quantity === quantity || quantity === 5}>
+                                <button className='btn btn-secondary' onClick={() => setQuantity(quantity + 1)} disabled={product?.quantity === quantity || quantity === 5 || product?.quantity === 0}>
                                     +
                                 </button>
                             </div>
                             {product?.quantity === quantity && <p className='text-danger'>Đã đạt số lượng tối đa</p>}
+                            {product?.quantity === 0 && <p className='text-danger'>Sản phẩm đã hết hàng</p>}
                             <hr />
-                            <p><span className='fw-bold'>Giá:</span> {price?.toLocaleString()} VNĐ</p>
+                            <p><span className='fw-bold'>Giá:</span> {price?.toLocaleString('vi-VN')} VNĐ</p>
                         </div>
                     </div>
                 </div>

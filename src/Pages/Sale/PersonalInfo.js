@@ -4,7 +4,7 @@ import { userContext } from '../../UserContext';
 import { useNavigate } from 'react-router-dom';
 import axios from 'axios';
 
-export default function PersonalInfo() {
+export default function PersonalSaleInfo() {
   const { user, loading, updateUser } = useContext(userContext);
   const navigate = useNavigate();
   const [address, setAddress] = useState(user?.address || []);

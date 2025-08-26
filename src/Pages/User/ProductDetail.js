@@ -23,6 +23,7 @@ export default function ProductDetail() {
         if (loading) return;
         if (!user) {
             navigate('/login');
+            return;
         }
         else {
             if (user.role === 1) {
@@ -31,6 +32,7 @@ export default function ProductDetail() {
             else {
                 alert("Bạn không có quyền truy cập");
                 navigate('/login');
+                return;
             }
         }
 
@@ -75,8 +77,7 @@ export default function ProductDetail() {
                                     </p>
 
                                     <div className="d-flex gap-2">
-                                        <button className="btn btn-primary">Thêm vào giỏ</button>
-                                        <button className="btn btn-outline-secondary">Mua ngay</button>
+                                        <button className="btn btn-outline-primary" onClick={() => product?.quantity > 0 ? navigate(`/order/${product.id}`) : alert("Sản phẩm đã hết hàng")}>Mua ngay</button>
                                     </div>
                                 </div>
                             </div>

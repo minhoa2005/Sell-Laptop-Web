@@ -36,10 +36,12 @@ export default function MyOrder() {
         if (loading) return;
         if (!user) {
             navigate('/login');
+            return;
         }
         if (user?.role !== 1) {
             alert('Bạn không có quyền truy cập');
             navigate('/login');
+            return;
         }
         fetchOrder();
         console.log(data);

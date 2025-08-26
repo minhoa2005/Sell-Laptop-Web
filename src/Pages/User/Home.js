@@ -45,8 +45,8 @@ export default function Home() {
 
                         </div>
                         <p className='card-text fs-5 text-center mb-0 text-danger'>{product.price} VNĐ</p>
-                        <div className='card-footer btn btn-primary' style={{ cursor: 'pointer', }} onClick={(e) => { e.stopPropagation(); navigate(`/order/${product.id}`) }}>
-                            <p className='text-center mb-0'>Đặt hàng</p>
+                        <div className='card-footer btn btn-primary' style={{ cursor: 'pointer', }} onClick={(e) => { e.stopPropagation(); product?.quantity > 0 && navigate(`/order/${product.id}`) }}>
+                            {product.quantity === 0 ? <p className='text-center mb-0'>Hết hàng</p> : <p className='text-center mb-0'>Đặt hàng</p>}
                         </div>
                     </div>
                 ))}

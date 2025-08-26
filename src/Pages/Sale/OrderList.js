@@ -11,11 +11,18 @@ export default function OrderList() {
         const response = await axios.get(`http://localhost:9999/order`);
         const query = response.data.map((item) => item.productId).join('&id=');
         const responseProduct = await axios.get(`http://localhost:9999/products?id=${query}`);
+        const userQuery = response.data.map((order) => order.userId).join('&id=');
+        const responseUser = await axios.get(`http://localhost:9999/user?id=${userQuery}`);
         const dataNew = response.data.map((item) => {
             const prod = responseProduct.data.find(p => p.id === item.productId);
+            const customer = responseUser.data.find(u => u.id === item.userId);
             return {
                 ...item,
-                product: prod
+                product: prod,
+                customer: {
+                    name: customer?.personalInfo?.name,
+                    email: customer?.email,
+                }
             }
         });
         console.log(dataNew);
@@ -42,17 +49,20 @@ export default function OrderList() {
                     </div>
                 </div>
                 <hr />
-                <div>
+                <div className='d-flex flex-column gap-5'>
                     {data.map(item => {
                         console.log(item.orderStatus, current);
                         if (item.orderStatus === current) {
                             return (
                                 <div className='border shadow-sm rounded p-3'>
-                                    <h3>Mã đơn hàng: {item.id}</h3>
+                                    <div>
+                                        <h3>Đơn hàng: {item.id}</h3>
+                                        <p>Ngày đặt hàng: {item.date.split(' ').join(', ')}</p>
+                                    </div>
                                     <hr />
                                     <div className='d-flex justify-content-between align-items-start'>
                                         <div>
-                                            <img src={`/${item.product?.image}`} alt={item.product?.name} className="img-fluid rounded shadow-sm border" />
+                                            <img src={`/${item.product?.image}`} alt={item.product?.name} className="img-fluid   rounded shadow-sm border" />
                                         </div>
                                         <div className='d-flex flex-column justify-content-end text-end'>
                                             <div>
@@ -63,11 +73,17 @@ export default function OrderList() {
                                                 <p className='xmb-0'><span className='fw-bold '>Số lượng:</span> {item.quantity}</p>
                                             </div>
                                             <div className='d-flex justify-content-end'>
-                                                <p className='mb-0'><span className='fw-bold '>Tổng tiền:</span> {(item.price * item.quantity).toLocaleString()} VNĐ</p>
+                                                <p className='xmb-0'><span className='fw-bold '>Tổng tiền:</span> {item.price.toLocaleString('vi-VN')} VNĐ</p>
+                                            </div>
+                                            <hr />
+                                            <div>
+                                                <p className='xmb-0'><span className='fw-bold '>Khách Hàng:</span> {item.customer?.name}</p>
+                                                <p className='xmb-0'><span className='fw-bold '>Địa chỉ giao hàng:</span> {item.address}</p>
+                                                <p className='xmb-0'><span className='fw-bold '>Số điện thoại:</span> {item.phone}</p>
                                             </div>
                                             {item.orderStatus === 'pending' && (
                                                 <div className='d-flex justify-content-end gap-3 mt-3'>
-                                                    <button className='btn btn-primary' onClick={() => handleUpdateStatus(item.id)} disabled>Đang giao hàng</button>
+                                                    <button className='btn btn-primary' onClick={() => handleUpdateStatus(item.id)} >Đang giao hàng</button>
                                                 </div>
                                             )}
                                         </div>

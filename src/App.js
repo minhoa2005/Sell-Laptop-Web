@@ -10,6 +10,8 @@ import Order from "./Pages/User/Order";
 import MyOrder from "./Pages/User/MyOrder";
 import OrderList from "./Pages/Sale/OrderList";
 import ProductList from "./Pages/Sale/ProductList";
+import PersonalSaleInfo from "./Pages/Sale/PersonalInfo";
+
 function App() {
   return (
     <div className="App">
@@ -24,7 +26,7 @@ function App() {
             <Route path="/order/:id" element={<Order />} />
             <Route path="/my-order" element={<MyOrder />} />
             <Route path="/sale/order-list" element={<OrderList />} />
-            <Route path="/sale/personal-info" element={<PersonalInfo />} />
+            <Route path="/sale/personal-info" element={<PersonalSaleInfo />} />
             <Route path="/sale/product-list" element={<ProductList />} />
             <Route path="*" element={<Navigate to="/home" />} />
           </Routes>
