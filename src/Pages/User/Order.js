@@ -66,10 +66,11 @@ export default function Order() {
     useEffect(() => {
         if (loading) return;
         if (!user) {
+            alert('Vui lòng đăng nhập để tiếp tục');
             navigate('/login');
             return;
         }
-        if (user.role !== 1) {
+        if (user?.role !== 1) {
             alert("Bạn không có quyền truy cập");
             navigate('/login');
             return;

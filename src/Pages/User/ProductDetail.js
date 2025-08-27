@@ -20,21 +20,22 @@ export default function ProductDetail() {
     };
 
     useEffect(() => {
-        if (loading) return;
-        if (!user) {
-            navigate('/login');
-            return;
-        }
-        else {
-            if (user.role === 1) {
-                fetchProduct();
-            }
-            else {
-                alert("Bạn không có quyền truy cập");
-                navigate('/login');
-                return;
-            }
-        }
+        // if (loading) return;
+        // if (!user) {
+        //     alert('Vui lòng đăng nhập để tiếp tục');
+        //     navigate('/login');
+        //     return;
+        // }
+        // else {
+        //     if (user.role === 1) {
+        fetchProduct();
+        //     }
+        //     else {
+        //         alert("Bạn không có quyền truy cập");
+        //         navigate('/login');
+        //         return;
+        //     }
+        // }
 
     }, [user, loading, id]);
     return (

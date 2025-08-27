@@ -38,6 +38,7 @@ export default function MyOrder() {
     useEffect(() => {
         if (loading) return;
         if (!user) {
+            alert('Vui lòng đăng nhập để tiếp tục');
             navigate('/login');
             return;
         }

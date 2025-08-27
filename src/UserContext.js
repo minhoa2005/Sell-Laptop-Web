@@ -17,7 +17,6 @@ export const UserProvider = ({ children }) => {
         if (checkUser) {
             setUser(JSON.parse(checkUser));
         }
-        console.log(checkUser)
         setLoading(false);
     }, []);
 

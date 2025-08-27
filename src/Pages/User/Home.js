@@ -33,24 +33,23 @@ export default function Home() {
         })
     }
     useEffect(() => {
-        if (loading) return;
-        if (!user) {
-            navigate('/login');
-        }
-        else {
-            if (user?.role === 1) {
-                fetchProduct();
-            }
-            if (user?.role === 2) {
-                navigate('/sale/order-list');
-            }
-            if (user?.role === 3) {
-                navigate('/manager/dashboard');
-            }
-        }
-    }, [user, loading]);
+        // if (loading) return;
+        // if (!user) {
+        //     navigate('/login');
+        //     return;
+        // }
+        // else {
+        // if (user?.role === 1) {
+        fetchProduct();
+        // return;
+        // }
+        // else {
+        //     navigate('/login');
+        //     return;
+        // }
+    }, []);
     return (
-        <div className='p-2'>
+        <div>
             <Header />
             <br />
             <div className='d-flex flex-row p-3 gap-3'>
