@@ -1,4 +1,3 @@
-
 import { BrowserRouter, Navigate, Route, Routes } from "react-router-dom";
 import { UserProvider } from "./UserContext";
 import Home from "./Pages/User/Home";
