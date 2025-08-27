@@ -6,22 +6,6 @@ export default function Header() {
     const [current, setCurrent] = useState();
     const navigate = useNavigate();
     const { user, setUser, loading } = useContext(userContext);
-    // useEffect(() => {
-    //     if (loading) return;
-    //     if (!user) {
-    //         navigate('/login');
-    //         return;
-    //     }
-    //     if (user?.role === 1) {
-    //         setCurrent('home');
-    //     }
-    //     else if (user?.role === 2) {
-    //         setCurrent('orderList');
-    //     }
-    //     else if (user?.role === 3) {
-    //         setCurrent('dashboard');
-    //     }
-    // }, [user, loading]);
     const handleLogout = () => {
         setUser(null);
         sessionStorage.removeItem('user');

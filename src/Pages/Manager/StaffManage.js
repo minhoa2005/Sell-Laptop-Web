@@ -5,7 +5,7 @@ import { userContext } from '../../UserContext';
 import { useNavigate } from 'react-router-dom';
 
 export default function StaffManage() {
-    const { user } = useContext(userContext);
+    const { user, loading } = useContext(userContext);
     const navigate = useNavigate();
     const [data, setData] = useState([]);
     const [selectedStaff, setSelectedStaff] = useState(null);
@@ -52,17 +52,20 @@ export default function StaffManage() {
         })
     }
     useEffect(() => {
+        if (!loading) {
+            return;
+        }
         if (!user) {
             navigate('login');
             return;
         }
-        if (user.role !== 3) {
+        if (user?.role !== 3) {
             alert('Bạn không có quyền truy cập');
             navigate('/login');
             return;
         }
         fetchStaff();
-    }, [])
+    }, [loading, user])
     useEffect(() => {
         const searched = data.find(staff => staff.id === selectedStaff);
         setStaffDetail(searched || {});

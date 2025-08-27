@@ -32,7 +32,7 @@ export default function MyOrder() {
         alert('Đơn hàng đã được hủy');
     };
     const handleReceivedOrder = async (orderId) => {
-        await axios.patch(`http://localhost:9999/order/${orderId}`, { orderStatus: 'delivered' });
+        await axios.patch(`http://localhost:9999/order/${orderId}`, { orderStatus: 'delivered', cancelReason: 'Khách hàng hủy' });
         fetchOrder();
     };
     useEffect(() => {
@@ -53,8 +53,9 @@ export default function MyOrder() {
     return (
         <div>
             <Header />
-            <h1 >Đơn hàng của tôi</h1>
-            <div className="container-fluid">
+
+            <div className="container-fluid p-3">
+                <h1 >Đơn hàng của tôi</h1>
                 <div className='d-flex justify-content-center'>
                     <div className='btn-group' role='group'>
                         <button type='button' className={`btn ${current === 'pending' ? 'btn-outline-primary' : 'btn-primary'}`} onClick={() => setCurrent('pending')}>Đang Chuẩn Bị Hàng</button>

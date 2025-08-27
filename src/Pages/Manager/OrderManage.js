@@ -23,7 +23,7 @@ export default function OrderManage() {
             const prod = responseProduct.data.find(p => p.id === item.productId);
             const customer = responseUser.data.find(u => u.id === item.userId);
             return {
-                ...item,
+                order: item,
                 product: prod,
                 customer: {
                     name: customer?.personalInfo?.name,
@@ -31,6 +31,7 @@ export default function OrderManage() {
                 }
             }
         });
+        console.log(dataNew);
         setOrders(dataNew);
     };
     const handleCancelOrder = async (orderId) => {
@@ -39,25 +40,65 @@ export default function OrderManage() {
             alert('Vui lòng nhập lý do hủy đơn hàng');
             return;
         }
+        const orderToCancel = orders.find(o => o.order.id === orderId);
+        if (orderToCancel) {
+            const newProductQuantity = orderToCancel.product.quantity + parseInt(orderToCancel.order.quantity);
+            await axios.patch(`http://localhost:9999/products/${orderToCancel.product.id}`, {
+                quantity: newProductQuantity
+            });
+        }
+
         await axios.patch(`http://localhost:9999/order/${orderId}`, { orderStatus: 'canceled', updatedBy: user.email, cancelReason });
         alert('Hủy đơn hàng thành công');
+        setCancelOrder(false);
+        setCancelReason('');
         fetchOrders();
     };
     const getDetail = (id) => {
-        const detail = orders.find(o => o.id === id);
+        const detail = orders.find(o => o.order.id === id);
         setSelectedOrder(detail);
         setViewDetail(true);
     };
     const filter = () => {
         return orders.filter(o => {
-            const matchSearch = o.id.toString().includes(search) || o.customer.name.toLowerCase().includes(search.toLowerCase()) || o.product.name.toLowerCase().includes(search.toLowerCase());
-            const matchFilter = statusFilter ? o.orderStatus === statusFilter : true;
+            const matchSearch = o.order.id.toString().includes(search) || o.customer.name.toLowerCase().includes(search.toLowerCase()) || o.product.name.toLowerCase().includes(search.toLowerCase());
+            const matchFilter = statusFilter ? o.order.orderStatus === statusFilter : true;
             return matchSearch && matchFilter;
         });
-    }
+    };
+    const updateOrder = async () => {
+        const quantity = parseInt(selectedOrder.order.quantity);
+        if (quantity <= 0 || isNaN(quantity) || quantity > 5) {
+            alert('Số lượng không hợp lệ');
+            return;
+        }
+        const oldData = orders.find(o => o.order.id === selectedOrder.order.id);
+        const oldQuantity = parseInt(oldData.order.quantity);
+        const quantityDifference = quantity - oldQuantity;
+
+        if (quantityDifference !== 0) {
+            const newProductQuantity = oldData.product.quantity - quantityDifference;
+            if (newProductQuantity < 0) {
+                alert('Số lượng sản phẩm không đủ');
+                return;
+            }
+            await axios.patch(`http://localhost:9999/products/${oldData.product.id}`, {
+                quantity: newProductQuantity
+            });
+        }
+        const newPrice = selectedOrder.product?.price.split('.').join('') * quantity;
+        await axios.patch(`http://localhost:9999/order/${selectedOrder.order.id}`, {
+            ...selectedOrder.order,
+            quantity: quantity,
+            price: newPrice
+        });
+        alert('Cập nhật đơn hàng thành công');
+        setViewDetail(false);
+        fetchOrders();
+    };
     useEffect(() => {
         fetchOrders();
-    }, [])
+    }, []);
     return (
         <div>
             <Header />
@@ -87,18 +128,18 @@ export default function OrderManage() {
                     </thead>
                     <tbody>
                         {filter().map(order => (
-                            <tr key={order.id}>
-                                <td>{order.id}</td>
+                            <tr key={order.order.id}>
+                                <td>{order.order.id}</td>
                                 <td>{order.customer.name}</td>
                                 <td>{order.product.name}</td>
-                                <td>{order.quantity}</td>
-                                <td>{order.price.toLocaleString('vi-VN')} VNĐ</td>
-                                <td>{order.orderStatus}</td>
-                                <td>{order.processBy || 'Chưa xử lý hoặc khách hàng đã hủy'}</td>
+                                <td>{order.order.quantity}</td>
+                                <td>{order.order.price.toLocaleString('vi-VN')} VNĐ</td>
+                                <td>{order.order.orderStatus}</td>
+                                <td>{order.order.processBy || 'Chưa xử lý'}</td>
                                 <td>
                                     <div className='d-flex gap-3 justify-content-start'>
-                                        <button className='btn btn-primary' onClick={() => { getDetail(order.id) }}>Xem</button>
-                                        {order.orderStatus !== 'canceled' && order.orderStatus !== 'delivered' && <button className='btn btn-danger' onClick={() => { setCancelOrder(true); setOrderId(order.id); }}>Hủy</button>}
+                                        <button className='btn btn-primary' onClick={() => { getDetail(order.order.id) }}>Xem</button>
+                                        {order.order.orderStatus !== 'canceled' && order.order.orderStatus !== 'delivered' && <button className='btn btn-danger' onClick={() => { setCancelOrder(true); setOrderId(order.order.id); }}>Hủy</button>}
                                     </div>
                                 </td>
                             </tr>
@@ -115,25 +156,30 @@ export default function OrderManage() {
                                 <button type='button' className='btn-close' onClick={() => setViewDetail(false)}></button>
                             </div>
                             <div className='modal-body'>
-                                <h6>Mã Đơn: {selectedOrder.id}</h6>
+                                <h6>Mã Đơn: {selectedOrder.order?.id}</h6>
                                 <p><span className='fw-bold'>Tên Khách Hàng:</span> {selectedOrder.customer?.name}</p>
                                 <p><span className='fw-bold'>Tên Sản Phẩm:</span> {selectedOrder.product?.name}</p>
-                                <p><span className='fw-bold'>Người Xử Lý:</span> {selectedOrder.processBy || 'Chưa xử lý hoặc khách hàng đã hủy'}</p>
+                                <p><span className='fw-bold'>Người Xử Lý:</span> {selectedOrder.order?.processBy || 'Chưa xử lý hoặc khách hàng đã hủy'}</p>
                                 <label htmlFor="quantity" className='fw-bold'>Số Lượng:</label>
-                                <input type="number" className='form-control' disabled={selectedOrder.orderStatus === 'canceled'} id="quantity" value={selectedOrder.quantity} onChange={(e) => setSelectedOrder({ ...selectedOrder, quantity: e.target.value })} />
-                                <p><span className='fw-bold'>Giá:</span> {selectedOrder.price?.toLocaleString('vi-VN')} VNĐ</p>
-                                <select className="form-select" value={selectedOrder.orderStatus} disabled={selectedOrder.orderStatus === 'canceled'} onChange={(e) => setSelectedOrder({ ...selectedOrder, orderStatus: e.target.value })}>
+                                <input type="number" className='form-control' disabled={selectedOrder.order?.orderStatus === 'canceled' || selectedOrder.order?.orderStatus === 'delivered'} id="quantity" value={selectedOrder.order?.quantity} onChange={(e) => setSelectedOrder({ ...selectedOrder, order: { ...selectedOrder.order, quantity: parseInt(e.target.value) || 0 } })} />
+                                <p><span className='fw-bold'>Giá:</span> {(selectedOrder.product?.price.split('.').join('') * selectedOrder.order?.quantity).toLocaleString('vi-VN')} VNĐ</p>
+                                <select className="form-select" value={selectedOrder.order?.orderStatus} disabled={selectedOrder.order?.orderStatus === 'canceled' || selectedOrder.order?.orderStatus === 'delivered'} onChange={(e) => setSelectedOrder({ ...selectedOrder, order: { ...selectedOrder.order, orderStatus: e.target.value } })}>
                                     <option value="pending">Đang chờ</option>
                                     <option value="shipping">Đang vận chuyển</option>
                                     <option value="delivered">Đã giao hàng</option>
-                                    {selectedOrder.orderStatus === 'canceled' && (
+                                    {selectedOrder.order?.orderStatus === 'canceled' && (
                                         <option value="canceled">Đã hủy</option>
                                     )}
                                 </select>
+                                {selectedOrder.order?.orderStatus === 'canceled' && (
+                                    <div className='alert alert-danger mt-3'>Lý do hủy: {selectedOrder.order?.cancelReason}</div>
+                                )}
                             </div>
-                            <div className='modal-footer'>
-                                <button className='btn btn-primary'>Lưu</button>
-                            </div>
+                            {selectedOrder.order?.orderStatus !== 'canceled' && (
+                                <div className='modal-footer'>
+                                    <button className='btn btn-primary' onClick={updateOrder}>Lưu</button>
+                                </div>
+                            )}
                         </div>
                     </div>
                 </div>

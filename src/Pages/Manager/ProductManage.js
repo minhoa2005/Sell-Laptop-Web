@@ -6,7 +6,7 @@ import { userContext } from '../../UserContext';
 
 
 export default function ProductManage() {
-    const { user } = useContext(userContext);
+    const { user, loading } = useContext(userContext);
     const navigate = useNavigate();
     const [data, setData] = useState([]);
     const [selectedProduct, setSelectedProduct] = useState(null);
@@ -106,17 +106,21 @@ export default function ProductManage() {
     }
 
     useEffect(() => {
+        if (loading) {
+            return;
+        }
         if (!user) {
+            console.log('no user');
             navigate('/login');
             return;
         }
-        if (user.role !== 3) {
+        if (user?.role !== 3) {
             alert('Bạn không có quyền truy cập');
             navigate('/login');
             return;
         }
         fetchProduct();
-    }, [])
+    }, [loading, user])
 
     useEffect(() => {
         const searched = data.find(product => product.id === selectedProduct);

@@ -36,17 +36,22 @@ export default function PersonalInfo() {
       return;
     }
     if (formPassword !== formCurrentPassword) {
+      setFormConfirmPassword('');
       alert('Mật khẩu không khớp');
       return;
     }
     const checkCurrent = await axios.get(`http://localhost:9999/user?email=${user.email}&password=${formCurrentPassword}`);
     if (checkCurrent.data.length === 0) {
       alert('Mật khẩu hiện tại không đúng');
+      setFormCurrentPassword('');
       return;
     }
     await axios.patch(`http://localhost:9999/user/${user.id}`, {
       password: formPassword
     });
+    setFormConfirmPassword('');
+    setFormPassword('');
+    setFormCurrentPassword('');
     alert('Đổi mật khẩu thành công');
 
   }
@@ -85,16 +90,21 @@ export default function PersonalInfo() {
           <div className='d-flex flex-column gap-2'>
             <label htmlFor="address" className='fw-bold'>Địa chỉ:</label>
             {(address || []).map((addr, index) => (
-              <div key={index} className='d-flex gap-3'>
-                <input type="text" id="address" className="form-control" value={addr} onChange={(e) => addAddress(index, e.target.value)} />
-                <button className='btn btn-danger' onClick={() => { setAddress(address.filter((addr, i) => i !== index)) }}>Xóa</button>
-              </div>
+              <>
+                <div key={index} className='d-flex gap-3'>
+                  <input type="text" id="address" className="form-control" value={addr} onChange={(e) => addAddress(index, e.target.value)} />
+                  <button className='btn btn-danger' onClick={() => { setAddress(address.filter((addr, i) => i !== index)) }}>Xóa</button>
+                </div>
+
+              </>
             ))}
+            <div>
+              <button className='btn btn-primary' onClick={() => { setAddress([...address, '']) }}>Thêm địa chỉ</button>
+            </div>
           </div>
           <hr />
-          <div className='d-flex justify-content-center gap-3'>
-            <button className='btn btn-primary' onClick={() => { setAddress([...address, '']) }}>Thêm địa chỉ</button>
-            <button className='btn btn-success btn-lg' onClick={() => { saveInformation(); }}>Lưu</button>
+          <div className='d-flex justify-content-end gap-3'>
+            <button className='btn btn-success' onClick={() => { saveInformation(); }}>Lưu</button>
           </div>
         </div>
         <br />

@@ -7,13 +7,16 @@ import { useNavigate } from 'react-router-dom';
 export default function ProductList() {
     const [data, setData] = useState([]);
     const [search, setSearch] = useState('');
-    const { user } = useContext(userContext);
+    const { user, loading } = useContext(userContext);
     const navigate = useNavigate();
     const fetchProduct = async () => {
         const response = await axios.get(`http://localhost:9999/products`);
         setData(response.data);
     }
     useEffect(() => {
+        if (!loading) {
+            return;
+        }
         if (!user) {
             navigate('/login');
             return;
@@ -24,7 +27,7 @@ export default function ProductList() {
             return;
         }
         fetchProduct();
-    }, []);
+    }, [loading, user]);
     const filter = () => {
         return data.filter(item => item.name.toLowerCase().includes(search.toLowerCase()));
     }

@@ -180,12 +180,14 @@
       "id": "3984",
       "userId": "c606",
       "productId": "1",
-      "quantity": 1,
-      "price": 25990000,
+      "quantity": "5",
+      "price": 129950000,
       "address": "Ha dong Ha Noi",
       "phone": "0912600863",
       "date": "17:29:22 26/8/2025",
-      "orderStatus": "pending"
+      "orderStatus": "canceled",
+      "updatedBy": "manager@gmail.com",
+      "cancelReason": "Hết hàng"
     },
     {
       "id": "f2ef",
@@ -196,7 +198,8 @@
       "address": "Ha dong Ha Noi",
       "phone": "0912600863",
       "date": "17:29:29 26/8/2025",
-      "orderStatus": "canceled"
+      "orderStatus": "canceled",
+      "cancelReason": "Khách hàng hủy"
     },
     {
       "id": "e39b",
@@ -207,14 +210,15 @@
       "address": "Ha dong Ha Noi",
       "phone": "0912600863",
       "date": "17:29:33 26/8/2025",
-      "orderStatus": "canceled"
+      "orderStatus": "canceled",
+      "cancelReason": "Khách hàng hủy"
     },
     {
       "id": "2923",
       "userId": "c606",
       "productId": "1",
-      "quantity": 1,
-      "price": 25990000,
+      "quantity": "2",
+      "price": 51980000,
       "address": "Ha dong Ha Noi",
       "phone": "0912600863",
       "date": "17:39:12 26/8/2025",
@@ -222,5 +226,4 @@
       "orderStatus": "delivered"
     }
   ]
-  
 }

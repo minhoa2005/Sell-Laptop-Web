@@ -6,7 +6,7 @@ import { userContext } from '../../UserContext';
 
 export default function OrderList() {
     const navigate = useNavigate();
-    const { user } = useContext(userContext);
+    const { user, loading } = useContext(userContext);
     const [current, setCurrent] = useState('pending');
     const [data, setData] = useState([]);
     const fetchOrder = async () => {
@@ -35,6 +35,9 @@ export default function OrderList() {
         fetchOrder();
     };
     useEffect(() => {
+        if (!loading) {
+            return;
+        }
         if (!user) {
             navigate('/login');
             return;
@@ -45,7 +48,7 @@ export default function OrderList() {
             return;
         }
         fetchOrder();
-    }, []);
+    }, [loading, user]);
     return (
         <div>
             <Header />
