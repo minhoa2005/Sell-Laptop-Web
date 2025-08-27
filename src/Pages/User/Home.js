@@ -8,16 +8,30 @@ export default function Home() {
     const { user, loading } = useContext(userContext);
     const [products, setProducts] = useState([]);
     const navigate = useNavigate();
+    const [searchFilter, setSearchFilter] = useState('');
+    const [priceFilter, setPriceFilter] = useState('');
     const fetchProduct = async () => {
         try {
             const response = await axios.get('http://localhost:9999/products');
             setProducts(response.data);
-            console.log('Products fetched successfully:', response.data);
+            console.log(response.data);
 
         } catch (error) {
             console.error('Error fetching products:', error);
         }
     };
+    const filter = () => {
+        return products.filter(product => {
+            console.log(product.name.toLowerCase());
+            const matchSearch = product.name.toLowerCase().includes(searchFilter.toLowerCase());
+            const price = product.price.split('.').join('');
+            const matchPrice = priceFilter.length === 0 || (priceFilter === '5' && price < 5000000) ||
+                (priceFilter === '5-10' && price >= 5000000 && price <= 10000000) ||
+                (priceFilter === '10-20' && price > 10000000 && price <= 20000000) ||
+                (priceFilter === '20' && price > 20000000);
+            return matchPrice && matchSearch;
+        })
+    }
     useEffect(() => {
         if (loading) return;
         if (!user) {
@@ -33,10 +47,22 @@ export default function Home() {
         }
     }, [user, loading]);
     return (
-        <div>
+        <div className='p-2'>
             <Header />
+            <br />
+            <div className='d-flex flex-row p-3 gap-3'>
+                <input type="text" className='form-control' placeholder='Tìm kiếm sản phẩm...' onChange={(e) => setSearchFilter(e.target.value)} />
+                <select className='form-select' onChange={(e) => setPriceFilter(e.target.value)}>
+                    <option value="">Tìm theo giá</option>
+                    <option value="5">Dưới 5 triệu</option>
+                    <option value="5-10">5 triệu - 10 triệu</option>
+                    <option value="10-20">10 triệu - 20 triệu</option>
+                    <option value="20">Trên 20 triệu</option>
+                </select>
+            </div>
+            <br />
             <div className='d-flex flex-wrap gap-5 container-fluid'>
-                {products.map(product => (
+                {filter().map(product => (
                     <div className='card' key={product.id} style={{ width: '16rem', cursor: 'pointer' }} onClick={() => navigate(`/product/${product.id}`)}>
                         <img src={product.image} alt={product.name} style={{ objectFit: 'cover', height: '200px' }} />
                         <div className='card-body'>

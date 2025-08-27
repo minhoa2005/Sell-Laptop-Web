@@ -60,7 +60,7 @@ export default function MyOrder() {
                     </div>
                 </div>
                 <hr />
-                <div>
+                <div className='d-flex flex-column gap-5'>
                     {data.map(item => {
                         console.log(item.orderStatus, current);
                         if (item.orderStatus === current) {

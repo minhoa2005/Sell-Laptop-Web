@@ -26,6 +26,10 @@ export default function Login() {
                 else if (getUser.data[0].role === 2) {
                     navigate('/sale/order-list');
                 }
+                else if (getUser.data[0].role === 3) {
+                    console.log('manager')
+                    navigate('/manager/dashboard');
+                }
                 else {
                     navigate('/login');
                 }
@@ -43,6 +47,9 @@ export default function Login() {
             }
             else if (user?.role === 2) {
                 navigate('/sale/order-list');
+            }
+            else if (user?.role === 3) {
+                navigate('/manager/dashboard');
             }
             else {
                 navigate('/login')

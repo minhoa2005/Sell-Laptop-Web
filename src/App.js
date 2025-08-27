@@ -10,7 +10,10 @@ import Order from "./Pages/User/Order";
 import MyOrder from "./Pages/User/MyOrder";
 import OrderList from "./Pages/Sale/OrderList";
 import ProductList from "./Pages/Sale/ProductList";
-import PersonalSaleInfo from "./Pages/Sale/PersonalInfo";
+import PersonalShopInfo from "./Pages/Sale/PersonalInfo";
+import DashBoard from "./Pages/Manager/DashBoard";
+import ProductManage from "./Pages/Manager/ProductManage";
+import StaffManage from "./Pages/Manager/StaffManage";
 
 function App() {
   return (
@@ -26,8 +29,11 @@ function App() {
             <Route path="/order/:id" element={<Order />} />
             <Route path="/my-order" element={<MyOrder />} />
             <Route path="/sale/order-list" element={<OrderList />} />
-            <Route path="/sale/personal-info" element={<PersonalSaleInfo />} />
+            <Route path="/sale/personal-info" element={<PersonalShopInfo />} />
             <Route path="/sale/product-list" element={<ProductList />} />
+            <Route path="/manager/dashboard" element={<DashBoard />} />
+            <Route path="/manager/product-manage" element={<ProductManage />} />
+            <Route path="/manager/staff-manage" element={<StaffManage />} />
             <Route path="*" element={<Navigate to="/home" />} />
           </Routes>
         </BrowserRouter>

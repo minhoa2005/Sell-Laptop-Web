@@ -51,7 +51,7 @@ export default function ProductDetail() {
                     <div className="row g-4">
                         <div className="col-md-6">
                             <img
-                                src={product.image ? `/${product.image}` : '/placeholder.png'}
+                                src={product.image.includes('/') ? product.image : `/${product.image}`}
                                 alt={product.name}
                                 className="img-fluid rounded shadow-sm w-100 border"
                                 style={{ maxHeight: 480, objectFit: 'cover' }}

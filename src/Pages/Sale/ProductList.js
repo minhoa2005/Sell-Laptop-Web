@@ -4,6 +4,8 @@ import axios from 'axios';
 
 export default function ProductList() {
     const [data, setData] = useState([]);
+    const [search, setSearch] = useState('');
+    const [sort, setSort] = useState('asc');
     const fetchProduct = async () => {
         const response = await axios.get(`http://localhost:9999/products`);
         setData(response.data);
@@ -11,12 +13,17 @@ export default function ProductList() {
     useEffect(() => {
         fetchProduct();
     }, []);
+    const filter = () => {
+        return data.filter(item => item.name.toLowerCase().includes(search.toLowerCase()));
+    }
     return (
         <div>
             <Header />
-            <div>
-                filter
+            <br />
+            <div className='p-3'>
+                <input type="text" className='form-control' placeholder='Tìm kiếm sản phẩm...' onChange={(e) => setSearch(e.target.value)} />
             </div>
+            <br />
             <div>
                 <table className='table'>
                     <thead>
@@ -32,7 +39,7 @@ export default function ProductList() {
                         </tr>
                     </thead>
                     <tbody>
-                        {data.map((item, index) => (
+                        {filter().map((item, index) => (
                             <tr key={item.id} style={{}}>
                                 <td>{index + 1}</td>
                                 <td>{item.name}</td>

@@ -7,7 +7,7 @@
       "price": "25.990.000",
       "currentPrice": "20.990.000",
       "image": "laptop1.png",
-      "quantity": 0
+      "quantity": 10
     },
     {
       "id": "2",
@@ -89,6 +89,14 @@
       "currentPrice": "17.490.000",
       "image": "laptop10.png",
       "quantity": 5
+    },
+    {
+      "id": "d544",
+      "name": "Laptop Masstel E140 Celeron",
+      "description": "Intel Celeron N4120, card đồ họa Intel UHD Graphics kết hợp RAM 4 GB và SSD 128GB.",
+      "price": "3.590.000",
+      "image": "https://cdn2.cellphones.com.vn/x/media/catalog/product/t/e/text_ng_n_9_36.png?_gl=1*10yug4*_gcl_au*ODk1NDY5MDA4LjE3NTYyMzE3Mjk.*_ga*MjMxMzk0MTE3LjE3NTYyMzE3Mjk.*_ga_QLK8WFHNK9*czE3NTYyMzE3MjkkbzEkZzEkdDE3NTYyMzE3NTkkajMwJGwwJGgxOTYzMjkzNDQ.",
+      "quantity": 10
     }
   ],
   "user": [
@@ -110,9 +118,39 @@
       "id": "5e6d",
       "email": "minh4122005@gmail.com",
       "password": "minhoa123456",
-      "personalInfo": {},
+      "personalInfo": {
+        "name": "Tran Duc Minh",
+        "phone": "0912600863"
+      },
       "address": [],
       "role": 2
+    },
+    {
+      "id": "f242",
+      "email": "manager@gmail.com",
+      "password": "123",
+      "personalInfo": {},
+      "address": [],
+      "role": 3
+    },
+    {
+      "id": "e216",
+      "personalInfo": {
+        "name": "11111212",
+        "phone": "1123432343"
+      },
+      "email": "nnn@gmail.com",
+      "password": "123",
+      "role": 2
+    },
+    {
+      "id": "02dc",
+      "personalInfo": {
+        "name": "22341123",
+        "phone": "2211241212"
+      },
+      "email": "2wad@gmail.com",
+      "password": "minhhhhhh"
     }
   ],
   "order": [
