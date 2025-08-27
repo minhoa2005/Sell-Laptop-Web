@@ -51,6 +51,7 @@ export default function Header() {
                         <p className={`fs-3 mb-0 ${current === 'dashboard' ? '' : 'text-muted'}`} style={{ cursor: 'pointer' }} onClick={() => { setCurrent('dashboard'); navigate('/manager/dashboard') }}>Dashboard</p>
                         <p className={`fs-5 mb-0 ${current === 'userList' ? '' : 'text-muted'}`} style={{ cursor: 'pointer' }} onClick={() => { setCurrent('userList'); navigate('/manager/staff-manage') }}>Danh Sách Nhân Viên</p>
                         <p className={`fs-5 mb-0 ${current === 'roleList' ? '' : 'text-muted'}`} style={{ cursor: 'pointer' }} onClick={() => { setCurrent('roleList'); navigate('/manager/product-manage') }}>Danh Sách Sản Phẩm</p>
+                        <p className={`fs-5 mb-0 ${current === 'orderManage' ? '' : 'text-muted'}`} style={{ cursor: 'pointer' }} onClick={() => { setCurrent('orderManage'); navigate('/manager/order-manage') }}>Quản Lý Đơn Hàng</p>
                     </>
                 )}
                 <div>

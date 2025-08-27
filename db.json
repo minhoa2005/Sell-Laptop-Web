@@ -6,7 +6,7 @@
       "description": "Intel core i5-1340P, Ram 8GB, SSD 256GB, Màn Hình 14 inch WUXGA, Siêu mỏng, siêu nhẹ",
       "price": "25.990.000",
       "currentPrice": "20.990.000",
-      "image": "laptop1.png",
+      "image": "https://res.cloudinary.com/djwmvth76/image/upload/v1756302630/wsrxh3hr1aex6zu2iofu.jpg",
       "quantity": 10
     },
     {
@@ -97,6 +97,14 @@
       "price": "3.590.000",
       "image": "https://cdn2.cellphones.com.vn/x/media/catalog/product/t/e/text_ng_n_9_36.png?_gl=1*10yug4*_gcl_au*ODk1NDY5MDA4LjE3NTYyMzE3Mjk.*_ga*MjMxMzk0MTE3LjE3NTYyMzE3Mjk.*_ga_QLK8WFHNK9*czE3NTYyMzE3MjkkbzEkZzEkdDE3NTYyMzE3NTkkajMwJGwwJGgxOTYzMjkzNDQ.",
       "quantity": 10
+    },
+    {
+      "id": "ff92",
+      "name": "Laptop Lenovo Ideapad Slim 3 15AMN8 - 82XQ00J0VN",
+      "description": "R5 7520U, 16GB, 512GB, Full HD, Win11",
+      "price": "13.090.000",
+      "quantity": 10,
+      "image": "https://res.cloudinary.com/djwmvth76/image/upload/v1756302812/h7dnuze63pnamcmyd1qg.jpg"
     }
   ],
   "user": [
@@ -163,7 +171,10 @@
       "address": "Hoa Lac Thach That",
       "phone": "0912600863",
       "date": "17:26:12 26/8/2025",
-      "orderStatus": "shipping"
+      "processBy": "minh4122005@gmail.com",
+      "orderStatus": "canceled",
+      "updatedBy": "manager@gmail.com",
+      "cancelReason": "Hết hàng"
     },
     {
       "id": "3984",
@@ -207,7 +218,9 @@
       "address": "Ha dong Ha Noi",
       "phone": "0912600863",
       "date": "17:39:12 26/8/2025",
+      "processBy": "minh4122005@gmail.com",
       "orderStatus": "delivered"
     }
   ]
+  
 }

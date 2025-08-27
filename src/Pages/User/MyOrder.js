@@ -71,10 +71,13 @@ export default function MyOrder() {
                             return (
                                 <div className='border shadow-sm rounded p-3'>
                                     <h3>Mã đơn hàng: {item.id}</h3>
+                                    {(item.orderStatus === 'canceled' && item.cancelReason) && (
+                                        <div className='alert alert-danger'>{item.cancelReason}</div>
+                                    )}
                                     <hr />
                                     <div className='d-flex justify-content-between align-items-start'>
                                         <div>
-                                            <img src={item.product?.image} alt={item.product?.name} className="img-fluid rounded shadow-sm border" />
+                                            <img src={item.product?.image} alt={item.product?.name} className="img-fluid rounded shadow-sm border" style={{ maxHeight: '200px' }} />
                                         </div>
                                         <div className='d-flex flex-column justify-content-end text-end'>
                                             <div>

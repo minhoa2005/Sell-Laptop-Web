@@ -4,6 +4,7 @@ import Header from '../../Layout/Header';
 import { useLocation, useNavigate } from 'react-router-dom';
 import { userContext } from '../../UserContext';
 
+
 export default function ProductManage() {
     const { user } = useContext(userContext);
     const navigate = useNavigate();
@@ -13,6 +14,8 @@ export default function ProductManage() {
     const [addMode, setAddMode] = useState(false);
     const [search, setSearch] = useState('');
     const [sort, setSort] = useState('asc');
+    const [file, setFile] = useState(null);
+
     const { id } = useLocation().state || {};
 
 
@@ -36,7 +39,17 @@ export default function ProductManage() {
             alert('Vui lòng điền đầy đủ thông tin bắt buộc (tên, giá gốc, giá hiện tại)');
             return;
         }
-        await axios.put(`http://localhost:9999/products/${selectedProduct}`, productDetail);
+        if (productDetail.quantity < 0) {
+            alert('Số lượng không được âm');
+            return;
+        }
+        if (productDetail.quantity > 100) {
+            if (window.confirm('Số lượng quá lớn, bạn có chắc chắn muốn tiếp tục?') === false) {
+                return;
+            }
+        }
+        const url = await uploadFile();
+        await axios.put(`http://localhost:9999/products/${selectedProduct}`, { ...productDetail, image: url || productDetail.image });
         alert('Cập nhật sản phẩm thành công');
         setProductDetail({});
         setSelectedProduct(null);
@@ -48,7 +61,9 @@ export default function ProductManage() {
             alert('Vui lòng điền đầy đủ thông tin bắt buộc (tên, giá gốc, giá hiện tại, số lượng)');
             return;
         }
-        await axios.post('http://localhost:9999/products', productDetail);
+        const url = await uploadFile();
+        console.log(url);
+        await axios.post('http://localhost:9999/products', { ...productDetail, image: url || '' });
         alert('Thêm sản phẩm thành công');
         setAddMode(false);
         setProductDetail({})
@@ -71,6 +86,22 @@ export default function ProductManage() {
                 return b.quantity - a.quantity;
             });
             setData(sorted);
+        }
+    }
+
+    const uploadFile = async () => {
+        if (!file) {
+            return;
+        }
+        const formData = new FormData();
+        formData.append('file', file);
+        formData.append('upload_preset', 'fer202');
+        try {
+            const response = await axios.post('https://api.cloudinary.com/v1_1/djwmvth76/image/upload', formData);
+            return response.data.secure_url;
+        }
+        catch (err) {
+
         }
     }
 
@@ -135,20 +166,23 @@ export default function ProductManage() {
                             </tbody>
                         </table>
                     </div>
-                    <div className='col-4 shadow-sm border rounded'>
+                    <div className='col-4 shadow-sm border rounded' style={{ maxHeight: '500px', overflowY: 'auto' }}>
                         <h4>{addMode ? 'Thêm sản phẩm' : 'Chi tiết sản phẩm'}</h4>
                         <hr />
                         {selectedProduct && !addMode ? (
                             <>
                                 <div>
+                                    <img src={productDetail.image && productDetail.image.includes('https://') ? productDetail.image : `/${productDetail.image || ''}`} alt={productDetail.name} className='img-fluid mb-2' />
                                     <p className='mb-0 fw-bold'>Tên sản phẩm:</p>
                                     <input type="text" className='form-control mb-2' value={productDetail.name || ''} onChange={(e) => setProductDetail({ ...productDetail, name: e.target.value })} />
                                     <p className='mb-0 fw-bold'>Mô tả:</p>
                                     <textarea className='form-control mb-2' rows="3" value={productDetail.description || ''} onChange={(e) => setProductDetail({ ...productDetail, description: e.target.value })} />
                                     <p className='mb-0 fw-bold'>Giá:</p>
-                                    <input type="text" className='form-control mb-2' value={productDetail.price || ''} onChange={(e) => setProductDetail({ ...productDetail, price: e.target.value })} />
+                                    <input type="text" className='form-control mb-2' value={productDetail.price || ''} onChange={(e) => setProductDetail({ ...productDetail, price: (e.target.value).toLocaleString('vi-VN') })} />
                                     <p className='mb-0 fw-bold'>Hình ảnh:</p>
-                                    <input type="text" className='form-control mb-2' value={productDetail.image || ''} onChange={(e) => setProductDetail({ ...productDetail, image: e.target.value })} />
+                                    <input type="file" className='form-control mb-2' onChange={(e) => {
+                                        setFile(e.target.files[0]);
+                                    }} />
                                     <p className='mb-0 fw-bold'>Số lượng:</p>
                                     <input type="number" className='form-control mb-2' value={productDetail.quantity || ''} onChange={(e) => setProductDetail({ ...productDetail, quantity: parseInt(e.target.value) || 0 })} />
                                 </div>
@@ -169,7 +203,9 @@ export default function ProductManage() {
                                         <p className='mb-0 fw-bold'>Giá:</p>
                                         <input type="text" className='form-control mb-2' value={productDetail.price || ''} onChange={(e) => setProductDetail({ ...productDetail, price: e.target.value })} />
                                         <p className='mb-0 fw-bold'>Hình ảnh:</p>
-                                        <input type="text" className='form-control mb-2' placeholder="Tên file ảnh (vd: laptop10.png)" value={productDetail.image || ''} onChange={(e) => setProductDetail({ ...productDetail, image: e.target.value })} />
+                                        <input type="file" className='form-control mb-2' onChange={(e) => {
+                                            setFile(e.target.files[0]);
+                                        }} />
                                         <p className='mb-0 fw-bold'>Số lượng:</p>
                                         <input type="number" className='form-control mb-2' value={productDetail.quantity || ''} onChange={(e) => setProductDetail({ ...productDetail, quantity: parseInt(e.target.value) || 0 })} />
                                     </div>

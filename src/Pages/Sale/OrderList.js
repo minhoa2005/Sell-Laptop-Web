@@ -31,7 +31,7 @@ export default function OrderList() {
         setData(dataNew);
     };
     const handleUpdateStatus = async (orderId) => {
-        await axios.patch(`http://localhost:9999/order/${orderId}`, { orderStatus: 'shipping' });
+        await axios.patch(`http://localhost:9999/order/${orderId}`, { orderStatus: 'shipping', updatedBy: user.email });
         fetchOrder();
     };
     useEffect(() => {
