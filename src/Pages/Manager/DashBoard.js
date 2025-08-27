@@ -1,11 +1,13 @@
-import React, { useEffect, useState } from 'react'
+import React, { useContext, useEffect, useState } from 'react'
 import Header from '../../Layout/Header'
 import axios from 'axios';
 import { useNavigate } from 'react-router-dom';
+import { userContext } from '../../UserContext';
 
 export default function DashBoard() {
     const [data, setData] = useState([]);
     const [product, setProduct] = useState([]);
+    const { user } = useContext(userContext);
     const navigate = useNavigate();
     const fetchData = async () => {
         const response = await axios.get('http://localhost:9999/order');
@@ -26,11 +28,22 @@ export default function DashBoard() {
                     email: customer?.email,
                 }
             }
+
         });
+        dataNew.sort((a, b) => a.orderStatus.localeCompare(b.orderStatus));
         setProduct(filterProduct);
         setData(dataNew);
     };
     useEffect(() => {
+        if (!user) {
+            navigate('/login');
+            return;
+        }
+        if (user.role !== 3) {
+            alert('Bạn không có quyền truy cập');
+            navigate('/login');
+            return;
+        }
         fetchData();
     }, []);
     return (

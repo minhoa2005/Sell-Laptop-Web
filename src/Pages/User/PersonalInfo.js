@@ -33,10 +33,7 @@ export default function PersonalInfo() {
       navigate('/login');
       return;
     }
-    if (user?.role !== 1) {
-      navigate('/login');
-      return;
-    }
+
     setAddress(user?.address || []);
     setFormName(user?.personalInfo?.name || '');
     setFormEmail(user?.email || '');

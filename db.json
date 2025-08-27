@@ -2,7 +2,7 @@
   "products": [
     {
       "id": "1",
-      "name": " Laptop LG Gram 2023 14ZD90R-G.AX52A5",
+      "name": "Laptop LG Gram 2023 14ZD90R-G.AX52A5",
       "description": "Intel core i5-1340P, Ram 8GB, SSD 256GB, Màn Hình 14 inch WUXGA, Siêu mỏng, siêu nhẹ",
       "price": "25.990.000",
       "currentPrice": "20.990.000",
@@ -34,7 +34,7 @@
       "price": "24.990.000",
       "currentPrice": "22.990.000",
       "image": "laptop4.png",
-      "quantity": 4
+      "quantity": 5
     },
     {
       "id": "5",
@@ -88,7 +88,7 @@
       "price": "21.990.000",
       "currentPrice": "17.490.000",
       "image": "laptop10.png",
-      "quantity": 5
+      "quantity": 6
     },
     {
       "id": "d544",
@@ -185,7 +185,7 @@
       "address": "Ha dong Ha Noi",
       "phone": "0912600863",
       "date": "17:29:29 26/8/2025",
-      "orderStatus": "pending"
+      "orderStatus": "canceled"
     },
     {
       "id": "e39b",
@@ -196,7 +196,7 @@
       "address": "Ha dong Ha Noi",
       "phone": "0912600863",
       "date": "17:29:33 26/8/2025",
-      "orderStatus": "pending"
+      "orderStatus": "canceled"
     },
     {
       "id": "2923",
@@ -207,7 +207,7 @@
       "address": "Ha dong Ha Noi",
       "phone": "0912600863",
       "date": "17:39:12 26/8/2025",
-      "orderStatus": "pending"
+      "orderStatus": "delivered"
     }
   ]
 }

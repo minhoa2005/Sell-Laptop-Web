@@ -1,10 +1,12 @@
-import React, { useEffect, useState } from 'react'
+import React, { useContext, useEffect, useState } from 'react'
 import Header from '../../Layout/Header'
 import { useNavigate } from 'react-router-dom';
 import axios from 'axios';
+import { userContext } from '../../UserContext';
 
 export default function OrderList() {
     const navigate = useNavigate();
+    const { user } = useContext(userContext);
     const [current, setCurrent] = useState('pending');
     const [data, setData] = useState([]);
     const fetchOrder = async () => {
@@ -33,6 +35,15 @@ export default function OrderList() {
         fetchOrder();
     };
     useEffect(() => {
+        if (!user) {
+            navigate('/login');
+            return;
+        }
+        if (user.role !== 2) {
+            alert('Bạn không có quyền truy cập');
+            navigate('/login');
+            return;
+        }
         fetchOrder();
     }, []);
     return (

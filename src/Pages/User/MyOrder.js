@@ -24,6 +24,9 @@ export default function MyOrder() {
         setData(dataNew);
     };
     const handleCancelOrder = async (orderId) => {
+        await axios.patch(`http://localhost:9999/products/${data.find(item => item.id === orderId).productId}`, {
+            quantity: data.find(item => item.id === orderId).product.quantity + data.find(item => item.id === orderId).quantity
+        });
         await axios.patch(`http://localhost:9999/order/${orderId}`, { orderStatus: 'canceled' });
         fetchOrder();
         alert('Đơn hàng đã được hủy');

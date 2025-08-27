@@ -1,9 +1,12 @@
 import axios from 'axios';
-import React, { useEffect, useState } from 'react'
+import React, { useContext, useEffect, useState } from 'react'
 import Header from '../../Layout/Header';
-import { useLocation } from 'react-router-dom';
+import { useLocation, useNavigate } from 'react-router-dom';
+import { userContext } from '../../UserContext';
 
 export default function ProductManage() {
+    const { user } = useContext(userContext);
+    const navigate = useNavigate();
     const [data, setData] = useState([]);
     const [selectedProduct, setSelectedProduct] = useState(null);
     const [productDetail, setProductDetail] = useState({});
@@ -72,7 +75,15 @@ export default function ProductManage() {
     }
 
     useEffect(() => {
-
+        if (!user) {
+            navigate('/login');
+            return;
+        }
+        if (user.role !== 3) {
+            alert('Bạn không có quyền truy cập');
+            navigate('/login');
+            return;
+        }
         fetchProduct();
     }, [])
 

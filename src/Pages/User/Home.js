@@ -44,6 +44,9 @@ export default function Home() {
             if (user?.role === 2) {
                 navigate('/sale/order-list');
             }
+            if (user?.role === 3) {
+                navigate('/manager/dashboard');
+            }
         }
     }, [user, loading]);
     return (

@@ -1,8 +1,12 @@
 import axios from 'axios';
-import React, { useEffect, useState } from 'react'
+import React, { useContext, useEffect, useState } from 'react'
 import Header from '../../Layout/Header';
+import { userContext } from '../../UserContext';
+import { useNavigate } from 'react-router-dom';
 
 export default function StaffManage() {
+    const { user } = useContext(userContext);
+    const navigate = useNavigate();
     const [data, setData] = useState([]);
     const [selectedStaff, setSelectedStaff] = useState(null);
     const [staffDetail, setStaffDetail] = useState({});
@@ -48,6 +52,15 @@ export default function StaffManage() {
         })
     }
     useEffect(() => {
+        if (!user) {
+            navigate('login');
+            return;
+        }
+        if (user.role !== 3) {
+            alert('Bạn không có quyền truy cập');
+            navigate('/login');
+            return;
+        }
         fetchStaff();
     }, [])
     useEffect(() => {

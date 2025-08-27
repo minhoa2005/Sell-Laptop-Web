@@ -33,6 +33,11 @@ export default function PersonalShopInfo() {
       navigate('/login');
       return;
     }
+    if (user.role !== 2) {
+      alert('Bạn không có quyền truy cập');
+      navigate('/login');
+      return;
+    }
     setAddress(user?.address || []);
     setFormName(user?.personalInfo?.name || '');
     setFormEmail(user?.email || '');
