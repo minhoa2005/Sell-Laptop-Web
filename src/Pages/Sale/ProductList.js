@@ -14,7 +14,7 @@ export default function ProductList() {
         setData(response.data);
     }
     useEffect(() => {
-        if (!loading) {
+        if (loading) {
             return;
         }
         if (!user) {

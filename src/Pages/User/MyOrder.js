@@ -76,40 +76,52 @@ export default function MyOrder() {
                                         <div className='alert alert-danger'>{item.cancelReason}</div>
                                     )}
                                     <hr />
-                                    <div className='d-flex justify-content-between align-items-start'>
-                                        <div>
-                                            <img src={item.product?.image} alt={item.product?.name} className="img-fluid rounded shadow-sm border" style={{ maxHeight: '200px' }} />
-                                        </div>
-                                        <div className='d-flex flex-column justify-content-end text-end'>
+                                    {item.product ? (
+                                        <div className='d-flex justify-content-between align-items-start'>
                                             <div>
-                                                <h5>{item.product?.name}</h5>
-                                                <p>{item.product?.description}</p>
+                                                <img src={item.product?.image} alt={item.product?.name} className="img-fluid rounded shadow-sm border" style={{ maxHeight: '200px' }} />
                                             </div>
+                                            <div className='d-flex flex-column justify-content-end text-end'>
+                                                <div>
+                                                    <h5>{item.product?.name}</h5>
+                                                    <p>{item.product?.description}</p>
+                                                </div>
+                                                <div className='d-flex justify-content-end'>
+                                                    <p className='xmb-0'><span className='fw-bold '>Số lượng:</span> {item.quantity}</p>
+                                                </div>
+                                                <div className='d-flex justify-content-end'>
+                                                    <p className='mb-0'><span className='fw-bold '>Tổng tiền:</span> {(item.price * item.quantity).toLocaleString()} VNĐ</p>
+                                                </div>
+                                                <div className='d-flex justify-content-end gap-3 mt-3'>
+                                                    <button className='btn btn-primary' onClick={() => navigate(`/product/${item.product?.id}`)}>Xem Chi Tiết</button>
+                                                    {item.orderStatus === 'shipping' ? (
+
+                                                        <div>
+                                                            <button className='btn btn-danger'
+                                                                onClick={() => handleReceivedOrder(item.id)}>
+                                                                Đã nhận hàng
+                                                            </button>
+                                                        </div>
+                                                    ) : (
+                                                        <button className='btn btn-danger'
+                                                            onClick={() => { item.orderStatus === 'canceled' || item.orderStatus === 'delivered' ? navigate(`/order/${item?.product?.id}`) : handleCancelOrder(item.id) }}>
+                                                            {item.orderStatus === 'canceled' || item.orderStatus === 'delivered' ? 'Đặt lại' : 'Hủy Đơn'}
+                                                        </button>
+                                                    )}
+                                                </div>
+                                            </div>
+                                        </div>
+                                    ) : (
+                                        <div>
                                             <div className='d-flex justify-content-end'>
                                                 <p className='xmb-0'><span className='fw-bold '>Số lượng:</span> {item.quantity}</p>
                                             </div>
                                             <div className='d-flex justify-content-end'>
                                                 <p className='mb-0'><span className='fw-bold '>Tổng tiền:</span> {(item.price * item.quantity).toLocaleString()} VNĐ</p>
                                             </div>
-                                            <div className='d-flex justify-content-end gap-3 mt-3'>
-                                                <button className='btn btn-primary' onClick={() => navigate(`/product/${item.product?.id}`)}>Xem Chi Tiết</button>
-                                                {item.orderStatus === 'shipping' ? (
-
-                                                    <div>
-                                                        <button className='btn btn-danger'
-                                                            onClick={() => handleReceivedOrder(item.id)}>
-                                                            Đã nhận hàng
-                                                        </button>
-                                                    </div>
-                                                ) : (
-                                                    <button className='btn btn-danger'
-                                                        onClick={() => { item.orderStatus === 'canceled' || item.orderStatus === 'delivered' ? navigate(`/order/${item?.product?.id}`) : handleCancelOrder(item.id) }}>
-                                                        {item.orderStatus === 'canceled' || item.orderStatus === 'delivered' ? 'Đặt lại' : 'Hủy Đơn'}
-                                                    </button>
-                                                )}
-                                            </div>
+                                            <div className='alert alert-warning'>Sản phẩm đã bị xóa</div>
                                         </div>
-                                    </div>
+                                    )}
                                 </div>
                             );
                         }

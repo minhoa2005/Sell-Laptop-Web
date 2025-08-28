@@ -55,7 +55,12 @@ export default function DashBoard() {
     };
 
     const fetchData = async () => {
+        const now = new Date().toDateString();
         const response = await axios.get('http://localhost:9999/order');
+        const todayOrders = response.data.filter(order => {
+            const orderDate = new Date(order.date.split(' ')[1].split('/').reverse().join('-'));
+            return orderDate.toDateString() === now;
+        });
         const query = response.data.map((item) => item.productId).join('&id=');
         const responseProduct = await axios.get(`http://localhost:9999/products?id=${query}`);
         const userQuery = response.data.map((order) => order.userId).join('&id=');
@@ -65,7 +70,7 @@ export default function DashBoard() {
         const revenueData = calculateRevenue(response.data);
         setRevenue(revenueData);
 
-        const dataNew = response.data.map((item) => {
+        const dataNew = todayOrders.map((item) => {
             const prod = responseProduct.data.find(p => p.id === item.productId);
             const customer = responseUser.data.find(u => u.id === item.userId);
             return {

@@ -14,6 +14,7 @@ export default function StaffManage() {
     const [search, setSearch] = useState('');
     const fetchStaff = async () => {
         const response = await axios.get('http://localhost:9999/user?role=2');
+        console.log(response);
         setData(response.data);
     };
     const handleDelete = async (id) => {
@@ -52,7 +53,7 @@ export default function StaffManage() {
         })
     }
     useEffect(() => {
-        if (!loading) {
+        if (loading) {
             return;
         }
         if (!user) {

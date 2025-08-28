@@ -176,7 +176,7 @@ export default function ProductManage() {
                         {selectedProduct && !addMode ? (
                             <>
                                 <div>
-                                    <img src={productDetail.image && productDetail.image.includes('https://') ? productDetail.image : `/${productDetail.image || ''}`} alt={productDetail.name} className='img-fluid mb-2' />
+                                    <img src={productDetail.image && productDetail.image.includes('https://') ? productDetail.image : `/${productDetail.image || ''}`} alt={productDetail.name} className='img-fluid mb-2' style={{ height: '300px' }} />
                                     <p className='mb-0 fw-bold'>Tên sản phẩm:</p>
                                     <input type="text" className='form-control mb-2' value={productDetail.name || ''} onChange={(e) => setProductDetail({ ...productDetail, name: e.target.value })} />
                                     <p className='mb-0 fw-bold'>Mô tả:</p>

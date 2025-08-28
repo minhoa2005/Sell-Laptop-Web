@@ -7,7 +7,7 @@
       "price": "25.990.000",
       "currentPrice": "20.990.000",
       "image": "https://res.cloudinary.com/djwmvth76/image/upload/v1756302630/wsrxh3hr1aex6zu2iofu.jpg",
-      "quantity": 10
+      "quantity": 7
     },
     {
       "id": "2",
@@ -16,7 +16,7 @@
       "price": "17.990.000",
       "currentPrice": "11.990.000",
       "image": "laptop2.jpg",
-      "quantity": 2
+      "quantity": 0
     },
     {
       "id": "3",
@@ -60,7 +60,7 @@
       "description": "Intel i7-13700HX, RAM 8GB, SSD 512GB, RTX 4050 6GB, Màn Hình 16inch QHD 165Hz 100% sRGB, Windows 11",
       "price": "38.990.000",
       "currentPrice": "38.490.000",
-      "image": "laptop7.jpg",
+      "image": "https://res.cloudinary.com/djwmvth76/image/upload/v1756349246/pthum2vwzvsmcetyc6lw.jpg",
       "quantity": 2
     },
     {
@@ -172,9 +172,9 @@
       "phone": "0912600863",
       "date": "17:26:12 26/8/2025",
       "processBy": "minh4122005@gmail.com",
-      "orderStatus": "canceled",
+      "orderStatus": "delivered",
       "updatedBy": "manager@gmail.com",
-      "cancelReason": "Hết hàng"
+      "cancelReason": "Khách hàng hủy"
     },
     {
       "id": "3984",
@@ -224,6 +224,41 @@
       "date": "17:39:12 26/8/2025",
       "processBy": "minh4122005@gmail.com",
       "orderStatus": "delivered"
+    },
+    {
+      "id": "73fe",
+      "userId": "c606",
+      "productId": "8",
+      "quantity": 1,
+      "price": 12990000,
+      "address": "Ha dong Ha Noi",
+      "phone": "0912600863",
+      "date": "09:39:21 28/8/2025",
+      "orderStatus": "canceled",
+      "processBy": "manager@gmail.com",
+      "cancelReason": "Hàng lỗi"
+    },
+    {
+      "id": "881a",
+      "userId": "c606",
+      "productId": "2",
+      "quantity": 2,
+      "price": 35980000,
+      "address": "Ha dong Ha Noi",
+      "phone": "0912600863",
+      "date": "10:35:15 28/8/2025",
+      "orderStatus": "pending"
+    },
+    {
+      "id": "e355",
+      "userId": "c606",
+      "productId": "1",
+      "quantity": 3,
+      "price": 77970000,
+      "address": "Ha dong Ha Noi",
+      "phone": "0912600863",
+      "date": "10:35:27 28/8/2025",
+      "orderStatus": "pending"
     }
   ]
 }

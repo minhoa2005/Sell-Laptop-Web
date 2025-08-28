@@ -63,7 +63,7 @@ export default function Home() {
                 </select>
             </div>
             <br />
-            <div className='d-flex flex-wrap gap-5 container-fluid'>
+            <div className='d-flex flex-wrap gap-5 container-fluid p-3'>
                 {filter().map(product => (
                     <div className='card' key={product.id} style={{ width: '16rem', cursor: 'pointer' }} onClick={() => navigate(`/product/${product.id}`)}>
                         <img src={product.image} alt={product.name} style={{ objectFit: 'cover', height: '200px' }} />

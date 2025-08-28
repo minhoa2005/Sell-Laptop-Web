@@ -48,7 +48,7 @@ export default function OrderManage() {
             });
         }
 
-        await axios.patch(`http://localhost:9999/order/${orderId}`, { orderStatus: 'canceled', updatedBy: user.email, cancelReason });
+        await axios.patch(`http://localhost:9999/order/${orderId}`, { orderStatus: 'canceled', processBy: user.email, cancelReason });
         alert('Hủy đơn hàng thành công');
         setCancelOrder(false);
         setCancelReason('');
@@ -135,7 +135,7 @@ export default function OrderManage() {
                                 <td>{order.order.quantity}</td>
                                 <td>{order.order.price.toLocaleString('vi-VN')} VNĐ</td>
                                 <td>{order.order.orderStatus}</td>
-                                <td>{order.order.processBy || 'Chưa xử lý'}</td>
+                                <td>{order.order.processBy || order.order.updatedBy || 'Chưa xử lý'}</td>
                                 <td>
                                     <div className='d-flex gap-3 justify-content-start'>
                                         <button className='btn btn-primary' onClick={() => { getDetail(order.order.id) }}>Xem</button>
